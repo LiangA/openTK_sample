@@ -21,13 +21,14 @@ namespace OpenTK_Sample
         private Vector2d location;
         private Plant plant;
         private Queue<Task> tasks;
-        private int haltBefore, haltAfter;
+        private int haltBefore, haltAfter, wait;
         private bool moveFailed, fadeout;
 
         private double velocity;
         public double Velocity { get => velocity; set => velocity = value; }
         private Color color;
         public Color Color { get => color; set => color = value; }
+        public int Wait { get => wait;  }
 
         public delegate void StatusUpdateHandler(object sender, EventArgs args);
         public event StatusUpdateHandler StatusUpdate;
@@ -100,6 +101,17 @@ namespace OpenTK_Sample
             }
         }
 
+        public int Halt
+        {
+            get
+            {
+                if (State == VehicleState.Working)
+                    return (haltBefore < tasks.Peek().HaltBefore) ? (tasks.Peek().HaltBefore - haltBefore) : (tasks.Peek().HaltAfter - haltAfter);
+                else
+                    return 0;
+            }
+        }
+
         public Vector2d Location { get => location; }
 
         public Task? CurrentTask { get => ((tasks.Count == 0) ? (Task?)null : tasks.Peek()); }
@@ -143,7 +155,10 @@ namespace OpenTK_Sample
                     moveFailed = false;
                 }
                 else
+                {
                     moveFailed = true;
+                    wait = plant.GetWaitingTime(this);
+                }
             }
             else if (haltAfter < tasks.Peek().HaltAfter)
                 ++haltAfter;

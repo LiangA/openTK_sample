@@ -48,13 +48,16 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorPeeker.cs" />
     <Compile Include="ControlPanel.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GL2DUtil.cs" />
-    <Compile Include="orders.cs" />
+    <Compile Include="Order.cs" />
     <Compile Include="Plant.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="RoutingStrategies\STurn.cs" />
+    <Compile Include="TrafficMeasurer.cs" />
     <Compile Include="Vehicle.cs" />
     <Compile Include="Visualize.cs" />
   </ItemGroup>

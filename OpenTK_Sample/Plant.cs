@@ -60,13 +60,30 @@ namespace OpenTK_Sample
         }
     }
 
-    class Plant
+    struct Repo
+    {
+        Vector2d location;
+        Color color;
+
+        public Repo(Vector2d location, Color color)
+        {
+            this.location = location;
+            this.color = color;
+        }
+
+        public double X { get => location.X; set => location.X = value; }
+        public double Y { get => location.Y; set => location.Y = value; }
+        public Vector2d Location { get => location; set => location = value; }
+        public Color Color { get => color; set => color = value; }
+    }
+
+    partial class Plant
     {
         public Plant()
         {
             paths = new List<Path>();
             vehicles = new List<Vehicle>();
-            tasks = new List<Vector2d>();
+            tasks = new List<Repo>();
         }
 
         public static Plant FromFile(FileInfo file)
@@ -94,11 +111,11 @@ namespace OpenTK_Sample
 
         private IList<Path> paths;
         private IList<Vehicle> vehicles;
-        private IList<Vector2d> tasks;
+        private IList<Repo> tasks;
 
         public IList<Vehicle> Vehicles { get => vehicles; set => vehicles = value; }
         public IList<Path> Paths { get => paths; set => paths = value; }
-        public IList<Vector2d> Tasks { get => tasks; set => tasks = value; }
+        public IList<Repo> Tasks { get => tasks; set => tasks = value; }
 
         public Size Size
         {
@@ -118,19 +135,6 @@ namespace OpenTK_Sample
                 }
                 return new Size((int)Math.Ceiling(x), (int)Math.Ceiling(y));
             }
-        }
-
-        public bool CanMove(Vehicle vehicle, Vector2d move)
-        {
-            move += vehicle.Location;
-            foreach(var car in vehicles)
-            {
-                if (Object.ReferenceEquals(car, vehicle))
-                    continue;
-                if ((car.Location - move).Length <= 10)
-                    return false;
-            }
-            return true;
         }
     }
 }

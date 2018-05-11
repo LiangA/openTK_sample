@@ -60,7 +60,7 @@ namespace OpenTK_Sample
             IList<Task> tasks = new List<Task>();
             for (double x = 10; x <= 190; x += 60)
             {
-                List<Vector2d> jobs = new List<Vector2d>();
+                List<Repo> jobs = new List<Repo>();
                 //load all jobs
                 foreach (var job in plant.Tasks)
                 {
@@ -70,7 +70,7 @@ namespace OpenTK_Sample
                 //sort the odd isles except the last isle
                 if (Int32.Parse((Math.Floor(x / 60)).ToString()) % 2 == 0 && x < 190)
                 {
-                    jobs.Sort(delegate (Vector2d t1, Vector2d t2) {   //jobs.Sort(an integer), if the integer > 0 means t1 > t2, = 0 means t1 = t2, < 0 means t1 < t2
+                    jobs.Sort(delegate (Repo t1, Repo t2) {   //jobs.Sort(an integer), if the integer > 0 means t1 > t2, = 0 means t1 = t2, < 0 means t1 < t2
                         if (t1.Y < t2.Y)
                             return -1;
                         else if (t1.Y > t2.Y)
@@ -80,7 +80,7 @@ namespace OpenTK_Sample
                     });
                     foreach (var job in jobs)
                     {
-                        tasks.Add(new Task(job, 0, 20));
+                        tasks.Add(new Task(job.Location, 0, 20));
                     }
                     tasks.Add(new Task(new Vector2d(x, 90), 0, 5));
                     tasks.Add(new Task(new Vector2d(x + 60, 90), 0, 5));
@@ -89,7 +89,7 @@ namespace OpenTK_Sample
                 //sort the even isles except the last isle
                 if (Int32.Parse((Math.Floor(x / 60)).ToString()) % 2 == 1 && x < 190)
                 {
-                    jobs.Sort(delegate (Vector2d t1, Vector2d t2) {
+                    jobs.Sort(delegate (Repo t1, Repo t2) {
                         if (t1.Y < t2.Y)
                             return 1;
                         else if (t1.Y > t2.Y)
@@ -99,7 +99,7 @@ namespace OpenTK_Sample
                     });
                     foreach (var job in jobs)
                     {
-                        tasks.Add(new Task(job, 0, 20));
+                        tasks.Add(new Task(job.Location, 0, 20));
                     }
                     tasks.Add(new Task(new Vector2d(x, 10), 0, 5));
                     tasks.Add(new Task(new Vector2d(x + 60, 10), 0, 5));
@@ -111,7 +111,7 @@ namespace OpenTK_Sample
                     //sort the odd isles
                     if (Int32.Parse((Math.Floor(x / 60)).ToString()) % 2 == 0)
                     {
-                        jobs.Sort(delegate (Vector2d t1, Vector2d t2) {
+                        jobs.Sort(delegate (Repo t1, Repo t2) {
                             if (t1.Y < t2.Y)
                                 return -1;
                             else if (t1.Y > t2.Y)
@@ -121,7 +121,7 @@ namespace OpenTK_Sample
                         });
                         foreach (var job in jobs)
                         {
-                            tasks.Add(new Task(job, 0, 20));
+                            tasks.Add(new Task(job.Location, 0, 20));
                         }
                         tasks.Add(new Task(new Vector2d(x, 90), 0, 5));
                     }
@@ -129,7 +129,7 @@ namespace OpenTK_Sample
                     //sort the even isles
                     if (Int32.Parse((Math.Floor(x / 60)).ToString()) % 2 == 1)
                     {
-                        jobs.Sort(delegate (Vector2d t1, Vector2d t2) {
+                        jobs.Sort(delegate (Repo t1, Repo t2) {
                             if (t1.Y < t2.Y)
                                 return 1;
                             else if (t1.Y > t2.Y)
@@ -139,7 +139,7 @@ namespace OpenTK_Sample
                         });
                         foreach (var job in jobs)
                         {
-                            tasks.Add(new Task(job, 0, 20));
+                            tasks.Add(new Task(job.Location, 0, 20));
                         }
                         tasks.Add(new Task(new Vector2d(x, 10), 0, 5));
                     }
@@ -161,7 +161,7 @@ namespace OpenTK_Sample
                 foreach(var job in plant.Tasks)
                 {
                     if (job.X == x)
-                        jobs.Add(job);
+                        jobs.Add(job.Location);
                 }
                 jobs.Sort(delegate (Vector2d t1, Vector2d t2) {
                     if (t1.Y < t2.Y)
@@ -196,7 +196,7 @@ namespace OpenTK_Sample
                 foreach (var job in plant.Tasks)
                 {
                     if (job.X == x && job.Y <= 50)
-                        jobs.Add(job);
+                        jobs.Add(job.Location);
                 }
                 jobs.Sort(delegate (Vector2d t1, Vector2d t2) {
                     if (t1.Y < t2.Y)
@@ -223,7 +223,7 @@ namespace OpenTK_Sample
                 foreach (var job in plant.Tasks)
                 {
                     if (job.X == x)
-                        jobs.Add(job);
+                        jobs.Add(job.Location);
                 }
                 jobs.Sort(delegate (Vector2d t1, Vector2d t2) {
                     if (t1.Y < t2.Y)
@@ -247,7 +247,7 @@ namespace OpenTK_Sample
                 foreach (var job in plant.Tasks)
                 {
                     if (job.X == x && job.Y > 50)
-                        jobs.Add(job);
+                        jobs.Add(job.Location);
                 }
                 jobs.Sort(delegate (Vector2d t1, Vector2d t2) {
                     if (t1.Y < t2.Y)
@@ -304,7 +304,7 @@ namespace OpenTK_Sample
                 foreach (var job in plant.Tasks)
                 {
                     if (job.X == x && job.Y <= returnPoints[x])
-                        jobs.Add(job);
+                        jobs.Add(job.Location);
                 }
                 jobs.Sort(delegate (Vector2d t1, Vector2d t2) {
                     if (t1.Y < t2.Y)
@@ -331,7 +331,7 @@ namespace OpenTK_Sample
                 foreach (var job in plant.Tasks)
                 {
                     if (job.X == x)
-                        jobs.Add(job);
+                        jobs.Add(job.Location);
                 }
                 jobs.Sort(delegate (Vector2d t1, Vector2d t2) {
                     if (t1.Y < t2.Y)
@@ -356,7 +356,7 @@ namespace OpenTK_Sample
                 foreach (var job in plant.Tasks)
                 {
                     if (job.X == x && job.Y > returnPoints[x])
-                        jobs.Add(job);
+                        jobs.Add(job.Location);
                 }
                 jobs.Sort(delegate (Vector2d t1, Vector2d t2) {
                     if (t1.Y < t2.Y)
@@ -422,9 +422,17 @@ namespace OpenTK_Sample
             if (vehicle.State == VehicleState.Waiting)
             {
                 Task[] detour = new Task[1];
-                double dx = (vehicle.CurrentTask.Value.Target.Y > vehicle.Location.Y) ? vehicle.Velocity : -vehicle.Velocity;
-                detour[0] = new Task(vehicle.Location + new Vector2d(dx, 0));
-                vehicle.InsertTasks(detour);
+                double dx = 0, dy = 0;
+                if (true || vehicle.Location.Y != 10 && vehicle.Location.Y != 90)
+                    dx = (vehicle.CurrentTask.Value.Target.Y > vehicle.Location.Y) ? vehicle.Velocity : -vehicle.Velocity;
+                else
+                    dy = (vehicle.CurrentTask.Value.Target.X > vehicle.Location.X) ? vehicle.Velocity : -vehicle.Velocity;
+                int waiting = plant.GetWaitingTime(vehicle);
+                if (true || waiting >= 10/*5 * 3 + (int)(Math.Ceiling(40.0 / vehicle.Velocity))*/)
+                {
+                    detour[0] = new Task(vehicle.Location + new Vector2d(dx, dy));
+                    vehicle.InsertTasks(detour);
+                }
             }
         }
 

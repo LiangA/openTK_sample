@@ -54,7 +54,7 @@ namespace OpenTK_Sample
 
             // Draw tasks
             foreach (var job in plant.Tasks)
-                helper.DrawCircle(job, 5, Color.Blue, 4);
+                helper.DrawCircle(job.Location, 5, job.Color, 4);
 
             // Draw vehicles
             foreach (var car in plant.Vehicles)
