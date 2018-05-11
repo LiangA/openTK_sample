@@ -37,7 +37,7 @@ namespace OpenTK_Sample
             foreach (var x in X)
             {
                 for (int i = 1; i <= columnSize; ++i)
-                    repos[idx++] = new Vector2d(x, (maxy - miny) / (columnSize + 1.0) * i);
+                    repos[idx++] = new Vector2d(x, ((maxy - miny) / (columnSize + 1.0)) * i + miny);
             }
         }
 
@@ -61,12 +61,18 @@ namespace OpenTK_Sample
                 }
             }
             StreamWriter writer = new StreamWriter(file.OpenWrite());
+            string msg = "";
             for (int i = 0; i < choosed.Length; ++i)
             {
 
                 if (choosed[i])
-                    writer.WriteLine("{0},{1},{2}", repos[i].X.ToString(), repos[i].Y.ToString(), Next(31) + 20);
+                {
+                    if (msg.Length > 0)
+                        msg += "\n";
+                    msg += repos[i].X.ToString() + "," + repos[i].Y.ToString() + "," + (Next(31) + 20).ToString();
+                }
             }
+            writer.Write(msg);
             writer.Close();
         }
 

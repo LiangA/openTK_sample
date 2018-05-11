@@ -16,7 +16,7 @@ namespace OpenTK_Sample
         {
             this.plant = plant;
             thread = new Thread(new ThreadStart(Update));
-            cleared = false;
+            cleared = true;
         }
         private Thread thread;
         public Thread Controle { get => thread; set => thread = value; }

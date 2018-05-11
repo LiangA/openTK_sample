@@ -91,7 +91,7 @@ namespace OpenTK_Sample
             switch (appointMode)
             {
                 case AppointMode.WhenHasSpace:
-                    return (!plant.IsOccupied(startLocation));
+                    return (plant.Vehicles.Count < 8 && !plant.IsOccupied(startLocation));
                 case AppointMode.WhenPlantCleared:
                     return (plant.Vehicles.Count == 0);
                 default:
@@ -124,6 +124,8 @@ namespace OpenTK_Sample
             while (!reader.EndOfStream)
             {
                 string[] fields = reader.ReadLine().Trim().Split(',');
+                if (fields.Length <= 1)
+                    continue;
                 temp.Add(new Task(new Vector2d(Double.Parse(fields[0]), Double.Parse(fields[1])), 0, Int32.Parse(fields[2])));
                 plant.Tasks.Add(new Repo(new Vector2d(Double.Parse(fields[0]), Double.Parse(fields[1])), ColorPeeker.PeekColor(orderCount)));
             }
@@ -143,15 +145,6 @@ namespace OpenTK_Sample
             Vehicle vehicle = (Vehicle)sender;
             switch (vehicle.State)
             {
-                //case VehicleState.Moving:
-                //    vehicle.Color = Color.Sienna;
-                //    break;
-                //case VehicleState.Working:
-                //    vehicle.Color = Color.Orange;
-                //    break;
-                //case VehicleState.Waiting:
-                //    vehicle.Color = Color.Red;
-                //    break;
                 case VehicleState.Suspend:
                     //vehicle.Color = Color.Purple;
                     vehicle.Fadeout();
@@ -166,12 +159,12 @@ namespace OpenTK_Sample
             {
                 Task[] detour = new Task[1];
                 double dx = 0, dy = 0;
-                if (true || vehicle.Location.Y != 10 && vehicle.Location.Y != 90)
-                    dx = (vehicle.CurrentTask.Value.Target.Y > vehicle.Location.Y) ? vehicle.Velocity : -vehicle.Velocity;
+                if (vehicle.Location.Y != 10 && vehicle.Location.Y != 90)
+                    dx = vehicle.Velocity;
                 else
                     dy = (vehicle.CurrentTask.Value.Target.X > vehicle.Location.X) ? vehicle.Velocity : -vehicle.Velocity;
                 int waiting = plant.GetWaitingTime(vehicle);
-                if (true || waiting >= 10/*5 * 3 + (int)(Math.Ceiling(40.0 / vehicle.Velocity))*/)
+                if (true || waiting >= 5 * 3 + (int)(Math.Ceiling(40.0 / vehicle.Velocity)))
                 {
                     detour[0] = new Task(vehicle.Location + new Vector2d(dx, dy));
                     vehicle.InsertTasks(detour);
