@@ -47,6 +47,7 @@ namespace OpenTK_Sample
             DirectoryInfo di = new DirectoryInfo(@"./Plant1/Orders");
             foreach (var i in di.GetFiles("*.csv"))
                 orderFiles.Add(i.FullName);
+            // Test message
             
             Order order = new Order();
             order.FromFiles(orderFiles);
