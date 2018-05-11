@@ -26,3 +26,13 @@ C:\Users\Liang\Desktop\0510OpenTK_Sample\OpenTK_Sample\obj\Debug\OpenTK_Sample.c
 C:\Users\Liang\Desktop\0510OpenTK_Sample\OpenTK_Sample\obj\Debug\OpenTK_Sample.csproj.CoreCompileInputs.cache
 C:\Users\Liang\Desktop\0510OpenTK_Sample\OpenTK_Sample\obj\Debug\OpenTK_Sample.exe
 C:\Users\Liang\Desktop\0510OpenTK_Sample\OpenTK_Sample\obj\Debug\OpenTK_Sample.pdb
+D:\FL\Documents\Visual Studio 2017\Projects\OpenTK\OpenTK_Sample\bin\Debug\OpenTK_Sample.exe.config
+D:\FL\Documents\Visual Studio 2017\Projects\OpenTK\OpenTK_Sample\bin\Debug\OpenTK_Sample.exe
+D:\FL\Documents\Visual Studio 2017\Projects\OpenTK\OpenTK_Sample\bin\Debug\OpenTK_Sample.pdb
+D:\FL\Documents\Visual Studio 2017\Projects\OpenTK\OpenTK_Sample\bin\Debug\OpenTK.dll
+D:\FL\Documents\Visual Studio 2017\Projects\OpenTK\OpenTK_Sample\bin\Debug\OpenTK.xml
+D:\FL\Documents\Visual Studio 2017\Projects\OpenTK\OpenTK_Sample\obj\Debug\OpenTK_Sample.csprojResolveAssemblyReference.cache
+D:\FL\Documents\Visual Studio 2017\Projects\OpenTK\OpenTK_Sample\obj\Debug\OpenTK_Sample.csproj.CoreCompileInputs.cache
+D:\FL\Documents\Visual Studio 2017\Projects\OpenTK\OpenTK_Sample\obj\Debug\OpenTK_Sample.csproj.CopyComplete
+D:\FL\Documents\Visual Studio 2017\Projects\OpenTK\OpenTK_Sample\obj\Debug\OpenTK_Sample.exe
+D:\FL\Documents\Visual Studio 2017\Projects\OpenTK\OpenTK_Sample\obj\Debug\OpenTK_Sample.pdb

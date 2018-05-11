@@ -3,9 +3,26 @@ using System.IO;
 using System.Threading.Tasks;
 using OpenTK;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace OpenTK_Sample
 {
+    class Updater
+    {
+        private Plant plant;
+        public void Updater(Plant plant)
+        {
+            this.plant = plant;
+            thread = new Thread(new ThreadStart(Update));
+        }
+        private Thread thread;
+        public Thread Controle { get => thread; set => thread = value; }
+        private void Update()
+        {
+            foreach(var vehicle in plant.Vehicles)
+                vehicle.OnStatusUpdate();
+        }
+    }
     class Program
     {
         public static void Main(string[] args)

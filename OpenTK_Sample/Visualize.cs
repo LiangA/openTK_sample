@@ -11,7 +11,6 @@ namespace OpenTK_Sample
     {
         GameWindow window;
         GL2DUtil helper;
-        Timer updater;
         uint frameCount;
         long frameTick;
 
@@ -83,22 +82,11 @@ namespace OpenTK_Sample
             // Prepare FPS calculation
             frameCount = 0;
             frameTick = DateTime.Now.Ticks;
-            // Prepare updater
-            updater = new Timer();
-            updater.Interval = 10;
-            updater.Tick += UpdateScene;
-            updater.Start();
 
             // Prepare OpenGL Helper
             helper = new GL2DUtil(window.ClientSize, plant.Size, true);
             helper.MarginRight = 20;
             helper.MarginBottom = 20;
-        }
-
-        private void UpdateScene(object sender, EventArgs e)
-        {
-            for (int i = 0; i < plant.Vehicles.Count; ++i)
-                plant.Vehicles[i].OnStatusUpdate();
         }
     }
 }
