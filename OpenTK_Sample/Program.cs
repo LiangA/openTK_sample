@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using OpenTK;
+using System.Collections.Generic;
 
 namespace OpenTK_Sample
 {
@@ -9,22 +10,36 @@ namespace OpenTK_Sample
     {
         public static void Main(string[] args)
         {
-            // Prepare plant data
+            // load plant data
             Plant plant = new Plant();
-            for (int x = 10; x <= 190; x += 60)
-                plant.Paths.Add(new Path(x, 10, x, 90, 1));
-            plant.Paths.Add(new Path(10, 10, 190, 10, 1));
-            plant.Paths.Add(new Path(10, 90, 190, 90, 1));
+            plant = Plant.FromFile(@"./Plant1/layout.csv");
 
-            // Read tasks
-            FileInfo tasksFile = new FileInfo("./Tasks.csv");
-            StreamReader reader = new StreamReader(tasksFile.OpenRead());
-            while (!reader.EndOfStream)
+            // load orders
+            List<string> orderFiles = new List<string>();
+            DirectoryInfo di = new DirectoryInfo(@"./Plant1/Orders");
+            foreach (var i in di.GetFiles("*.csv"))
+                orderFiles.Add(i.FullName);
+            
+            Order order = new Order();
+            order.FromFiles(orderFiles);
+
+            foreach (var i in order.TasksForPlant)
             {
-                string[] line = reader.ReadLine().Split(',');
-                if (line.Length == 2)
-                    plant.Tasks.Add(new Vector2d(Double.Parse(line[0]), Double.Parse(line[1])));
+                foreach (var j in i)
+                {
+                    plant.Tasks.Add(j.Target);
+                }
             }
+
+            ////Read tasks
+            //FileInfo tasksFile = new FileInfo(@"./Plant1/Orders/Tasks.csv");
+            //StreamReader reader = new StreamReader(tasksFile.OpenRead());
+            //while (!reader.EndOfStream)
+            //{
+            //    string[] line = reader.ReadLine().Split(',');
+            //    if (line.Length == 3)
+            //        plant.Tasks.Add(new Vector2d(Double.Parse(line[0]), Double.Parse(line[1])));
+            //}
 
             Visualize display = new Visualize(plant, 400, 200);
 

@@ -74,6 +74,12 @@ namespace OpenTK_Sample
             Plant result = new Plant();
             // TO DO: Add file reader and prepare data for plant
             StreamReader reader = new StreamReader(file.OpenRead());
+            while (!reader.EndOfStream)
+            {
+                string[] line = reader.ReadLine().Split(',');
+                if (line.Length == 5 )
+                    result.paths.Add(new Path(Double.Parse(line[0]), Double.Parse(line[1]), Double.Parse(line[2]), Double.Parse(line[3]), Double.Parse(line[4])));
+            }
             reader.Close();
             return result;
         }

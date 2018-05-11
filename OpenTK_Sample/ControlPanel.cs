@@ -57,13 +57,97 @@ namespace OpenTK_Sample
         private void STurn(object sender, EventArgs e)
         {
             Vehicle vehicle = GenerateVehicle();
-            Task[] tasks = new Task[7];
-            for (int i = 0; i < 7; i += 2)
-                tasks[i] = new Task(new Vector2d(10 + 30 * i, (i % 4 == 0) ? 90 : 10), 0, 20);
-            for (int i = 1; i < 7; i += 2)
-                tasks[i] = new Task(new Vector2d(40 + 30 * i, (i % 4 == 1) ? 90 : 10), 0, 20);
+            IList<Task> tasks = new List<Task>();
+            for (double x = 10; x <= 190; x += 60)
+            {
+                List<Vector2d> jobs = new List<Vector2d>();
+                //load all jobs
+                foreach (var job in plant.Tasks)
+                {
+                    if (job.X == x)
+                        jobs.Add(job);
+                }
+                //sort the odd isles except the last isle
+                if (Int32.Parse((Math.Floor(x / 60)).ToString()) % 2 == 0 && x < 190)
+                {
+                    jobs.Sort(delegate (Vector2d t1, Vector2d t2) {   //jobs.Sort(an integer), if the integer > 0 means t1 > t2, = 0 means t1 = t2, < 0 means t1 < t2
+                        if (t1.Y < t2.Y)
+                            return -1;
+                        else if (t1.Y > t2.Y)
+                            return 1;
+                        else
+                            return 0;
+                    });
+                    foreach (var job in jobs)
+                    {
+                        tasks.Add(new Task(job, 0, 20));
+                    }
+                    tasks.Add(new Task(new Vector2d(x, 90), 0, 5));
+                    tasks.Add(new Task(new Vector2d(x + 60, 90), 0, 5));
+                }
+
+                //sort the even isles except the last isle
+                if (Int32.Parse((Math.Floor(x / 60)).ToString()) % 2 == 1 && x < 190)
+                {
+                    jobs.Sort(delegate (Vector2d t1, Vector2d t2) {
+                        if (t1.Y < t2.Y)
+                            return 1;
+                        else if (t1.Y > t2.Y)
+                            return -1;
+                        else
+                            return 0;
+                    });
+                    foreach (var job in jobs)
+                    {
+                        tasks.Add(new Task(job, 0, 20));
+                    }
+                    tasks.Add(new Task(new Vector2d(x, 10), 0, 5));
+                    tasks.Add(new Task(new Vector2d(x + 60, 10), 0, 5));
+                }
+
+                //sort the last isle
+                if (x == 190)
+                {
+                    //sort the odd isles
+                    if (Int32.Parse((Math.Floor(x / 60)).ToString()) % 2 == 0)
+                    {
+                        jobs.Sort(delegate (Vector2d t1, Vector2d t2) {
+                            if (t1.Y < t2.Y)
+                                return -1;
+                            else if (t1.Y > t2.Y)
+                                return 1;
+                            else
+                                return 0;
+                        });
+                        foreach (var job in jobs)
+                        {
+                            tasks.Add(new Task(job, 0, 20));
+                        }
+                        tasks.Add(new Task(new Vector2d(x, 90), 0, 5));
+                    }
+
+                    //sort the even isles
+                    if (Int32.Parse((Math.Floor(x / 60)).ToString()) % 2 == 1)
+                    {
+                        jobs.Sort(delegate (Vector2d t1, Vector2d t2) {
+                            if (t1.Y < t2.Y)
+                                return 1;
+                            else if (t1.Y > t2.Y)
+                                return -1;
+                            else
+                                return 0;
+                        });
+                        foreach (var job in jobs)
+                        {
+                            tasks.Add(new Task(job, 0, 20));
+                        }
+                        tasks.Add(new Task(new Vector2d(x, 10), 0, 5));
+                    }
+                }
+            }
             vehicle.SetTasks(tasks);
             vehicle.StatusUpdate += RemoveSuspendUpdater;
+            vehicle.StatusUpdate += DetourUpdater;
             plant.Vehicles.Add(vehicle);
         }
 
@@ -341,6 +425,20 @@ namespace OpenTK_Sample
                 double dx = (vehicle.CurrentTask.Value.Target.Y > vehicle.Location.Y) ? vehicle.Velocity : -vehicle.Velocity;
                 detour[0] = new Task(vehicle.Location + new Vector2d(dx, 0));
                 vehicle.InsertTasks(detour);
+            }
+        }
+
+        private void InfoUpdater(object sender, EventArgs e)
+        {
+            Vehicle vehicle = (Vehicle)sender;
+            Console.WriteLine(vehicle.State);
+            try
+            {
+                Console.WriteLine(vehicle.CurrentTask.Value.HaltAfter);
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("the vehicle was gone.");
             }
         }
 

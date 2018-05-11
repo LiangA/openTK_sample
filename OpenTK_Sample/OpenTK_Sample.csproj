@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{37552F2C-9277-478E-9AF1-04A9FD63580E}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>OpenTK_Sample</RootNamespace>
     <AssemblyName>OpenTK_Sample</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -52,6 +52,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GL2DUtil.cs" />
+    <Compile Include="orders.cs" />
     <Compile Include="Plant.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Vehicle.cs" />

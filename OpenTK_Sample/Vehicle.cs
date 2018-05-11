@@ -10,26 +10,9 @@ namespace OpenTK_Sample
         Scheduling,
         Moving,
         Working,
-        Suspend,
         Waiting,
+        Suspend,
         Removing
-    }
-
-    public struct Task
-    {
-        public Task(Vector2d tar, int prehalt = 0, int posthalt = 0)
-        {
-            target = tar;
-            haltBefore = prehalt;
-            haltAfter = posthalt;
-        }
-
-        int haltBefore, haltAfter;
-        Vector2d target;
-
-        public int HaltBefore { get => haltBefore; set => haltBefore = value; }
-        public int HaltAfter { get => haltAfter; set => haltAfter = value; }
-        public Vector2d Target { get => target; set => target = value; }
     }
 
     class Vehicle
@@ -57,7 +40,7 @@ namespace OpenTK_Sample
             haltBefore = 0;
             haltAfter = 0;
             tasks = new Queue<Task>();
-            fadeout = false;
+            fadeout = false; 
             StatusUpdate += DefaultUpdater;
         }
 
@@ -67,7 +50,7 @@ namespace OpenTK_Sample
 
         private void FindRoute()
         {
-
+            Console.WriteLine("finding routing");
         }
 
         public void SetTasks(IList<Task> Tasks)
@@ -94,6 +77,8 @@ namespace OpenTK_Sample
                 tasks.Enqueue(task);
         }
 
+        public void IgnoreTask() { tasks.Dequeue(); }
+
         public VehicleState State
         {
             get
@@ -119,7 +104,6 @@ namespace OpenTK_Sample
 
         public Task? CurrentTask { get => ((tasks.Count == 0) ? (Task?)null : tasks.Peek()); }
 
-        public void IgnoreTask() { tasks.Dequeue(); }
 
         public void OnStatusUpdate()
         {
