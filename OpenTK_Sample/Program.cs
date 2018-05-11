@@ -49,6 +49,7 @@ namespace OpenTK_Sample
     }
     class Program
     {
+        [STAThread]
         public static void Main(string[] args)
         {
             // load plant data
