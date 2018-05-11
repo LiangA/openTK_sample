@@ -10,7 +10,7 @@ namespace OpenTK_Sample
     class Updater
     {
         private Plant plant;
-        public void Updater(Plant plant)
+        public Updater(Plant plant)
         {
             this.plant = plant;
             thread = new Thread(new ThreadStart(Update));
@@ -19,8 +19,19 @@ namespace OpenTK_Sample
         public Thread Controle { get => thread; set => thread = value; }
         private void Update()
         {
-            foreach(var vehicle in plant.Vehicles)
-                vehicle.OnStatusUpdate();
+            while (true)
+            {
+                try
+                {
+                    foreach(var vehicle in plant.Vehicles)
+                        vehicle.OnStatusUpdate();
+                    Thread.Sleep(10);
+                }
+                catch (InvalidOperationException)
+                {
+                    continue;
+                }
+            }
         }
     }
     class Program
@@ -60,9 +71,13 @@ namespace OpenTK_Sample
 
             Visualize display = new Visualize(plant, 400, 200);
 
+            Updater updater = new Updater(plant);
+            updater.Controle.Start();
+
             ControlPanel panel = new ControlPanel(plant);
             panel.Show();
             display.Run();
+            updater.Controle.Abort();
         }
     }
 }
