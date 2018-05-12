@@ -82,7 +82,7 @@ namespace OpenTK_Sample
                         }
                         vehicle.SetTasks(orders.Dequeue());
                         vehicle.StatusUpdate += RemoveSuspendUpdater;
-                        vehicle.StatusUpdate += detourer.Detour;
+                        //vehicle.StatusUpdate += detourer.Detour;
                         vehicle.Color = ColorPeeker.PeekColor(vehicleCount++);
                     }
                     Thread.Sleep(5);

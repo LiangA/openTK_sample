@@ -58,6 +58,9 @@
     <Compile Include="Plant.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="RoutingStrategies\Detourer.cs" />
+    <Compile Include="RoutingStrategies\LargestGap.cs" />
+    <Compile Include="RoutingStrategies\Midpoint.cs" />
+    <Compile Include="RoutingStrategies\Return.cs" />
     <Compile Include="RoutingStrategies\STurn.cs" />
     <Compile Include="TrafficMeasurer.cs" />
     <Compile Include="Vehicle.cs" />

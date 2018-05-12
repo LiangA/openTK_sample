@@ -28,7 +28,7 @@ namespace OpenTK_Sample
                 {
                     foreach(var vehicle in plant.Vehicles)
                         vehicle.OnStatusUpdate();
-                    Thread.Sleep(1);
+                    Thread.Sleep(20);
                     ++turnCount;
                     if (!cleared && plant.Vehicles.Count == 0)
                     {
@@ -63,16 +63,18 @@ namespace OpenTK_Sample
                 orderFiles.Add(i.FullName);
 
             Updater updater = new Updater(plant);
-            updater.Controle.Start();
 
             Order agent = new Order(plant);
-            agent.AddOrders(di.GetFiles("*.csv"), OrderRule.FirstInFirstServe, RoutingStrategies.STurn.FindRoute);
-            agent.Agent.Start();
+            agent.AddOrders(di.GetFiles("*.csv"), OrderRule.FirstInFirstServe, RoutingStrategies.LargestGap.FindRoute);
+            agent.AppointMode = AppointMode.WhenPlantCleared;
 
             Visualize display = new Visualize(plant, 400, 200);
 
-            ControlPanel panel = new ControlPanel(plant, agent);
-            panel.Show();
+            updater.Controle.Start();
+            agent.Agent.Start();
+            //ControlPanel panel = new ControlPanel(plant, agent);
+            //panel.Show();
+
             display.Run();
             agent.Agent.Abort();
             updater.Controle.Abort();
