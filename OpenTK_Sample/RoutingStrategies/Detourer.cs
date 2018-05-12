@@ -22,6 +22,16 @@ namespace OpenTK_Sample.RoutingStrategies
                 return ;
             diff.Normalize();
             double dx = 10, dy = diff.Y * 10;
+            foreach (var car in plant.Vehicles)
+            {
+                if (car.Location == vehicle.Location + new Vector2d(0, dy))
+                {
+                    if (car.Halt < 40)
+                        return;
+                    else
+                        break;
+                }
+            }
             Task[] tasks = new Task[4];
             tasks[0] = new Task(vehicle.Location + new Vector2d(dx, 0), 5, 5);
             tasks[1] = new Task(vehicle.Location + new Vector2d(dx, dy), 0, 0);

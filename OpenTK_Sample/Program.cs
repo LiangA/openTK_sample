@@ -28,7 +28,7 @@ namespace OpenTK_Sample
                 {
                     foreach(var vehicle in plant.Vehicles)
                         vehicle.OnStatusUpdate();
-                    Thread.Sleep(20);
+                    Thread.Sleep(1);
                     ++turnCount;
                     if (!cleared && plant.Vehicles.Count == 0)
                     {
@@ -40,7 +40,7 @@ namespace OpenTK_Sample
                         cleared = false;
                     }
                 }
-                catch (InvalidOperationException)
+                catch (Exception)
                 {
                     continue;
                 }
