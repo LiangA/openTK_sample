@@ -9,18 +9,20 @@ namespace OpenTK_Sample
     class ControlPanel: Form
     {
         Plant plant;
+        Order order;
 
         Button[] buttons;
 
-        public ControlPanel(Plant plant)
+        public ControlPanel(Plant plant, Order order = null)
         {
             this.plant = plant;
+            this.order = order;
 
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
-            buttons = new Button[5];
-            for (int i = 0; i < 5; ++i)
+            buttons = new Button[6];
+            for (int i = 0; i < buttons.Length; ++i)
             {
                 buttons[i] = new Button();
                 buttons[i].Location = new Point(10, 30 * i + 10);
@@ -43,7 +45,18 @@ namespace OpenTK_Sample
             buttons[4].Text = "Reset";
             buttons[4].Click += Reset;
 
+            buttons[5].Text = "Cancel detour";
+            buttons[5].Click += RemoveDetour;
+
             this.ClientSize = new Size(130, 30 * buttons.Length + 10);
+        }
+
+        private void RemoveDetour(object sender, EventArgs args)
+        {
+            foreach(var vehicle in plant.Vehicles)
+            {
+                vehicle.StatusUpdate -= order.Detour;
+            }
         }
 
         private Vehicle GenerateVehicle()

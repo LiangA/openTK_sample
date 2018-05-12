@@ -45,20 +45,27 @@ namespace OpenTK_Sample
 
         private void DrawScene(object sender, FrameEventArgs e)
         {
-            // Clear Screen
-            GL.Clear(ClearBufferMask.ColorBufferBit);
+            try
+            {
+                // Clear Screen
+                GL.Clear(ClearBufferMask.ColorBufferBit);
 
-            // Draw plant
-            foreach (var path in plant.Paths)
-                helper.DrawPolygon(path.Rectangle, Color.LightGray);
+                // Draw plant
+                foreach (var path in plant.Paths)
+                    helper.DrawPolygon(path.Rectangle, Color.LightGray);
 
-            // Draw tasks
-            foreach (var job in plant.Tasks)
-                helper.DrawCircle(job.Location, 5, job.Color, 4);
+                // Draw tasks
+                foreach (var job in plant.Tasks)
+                    helper.DrawCircle(job.Location, 5, job.Color, 4);
 
-            // Draw vehicles
-            foreach (var car in plant.Vehicles)
-                helper.DrawCircle(car.Location, 5, car.Color);
+                // Draw vehicles
+                foreach (var car in plant.Vehicles)
+                    helper.DrawCircle(car.Location, 5, car.Color);
+            }
+            catch (Exception)
+            {
+
+            }
 
             // Flush the drawed data to current screen
             window.SwapBuffers();
@@ -85,8 +92,6 @@ namespace OpenTK_Sample
 
             // Prepare OpenGL Helper
             helper = new GL2DUtil(window.ClientSize, plant.Size, true);
-            helper.MarginRight = 20;
-            helper.MarginBottom = 20;
         }
     }
 }

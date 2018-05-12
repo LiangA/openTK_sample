@@ -5,11 +5,17 @@ namespace OpenTK_Sample
 {
     partial class Plant
     {
-        public bool IsOccupied(Vector2d loc)
+        public bool IsOccupied(Vector2d move, int id = 0)
         {
             foreach(var car in vehicles)
             {
-                if ((car.Location - loc).Length < 10)
+                if (id == car.Id)
+                {
+                    if (car.Location == move)
+                        car.Fadeout();
+                    continue;
+                }
+                if ((car.Location - move).Length < 10)
                     return true;
             }
             return false;
@@ -18,14 +24,7 @@ namespace OpenTK_Sample
         public bool CanMove(Vehicle vehicle, Vector2d move)
         {
             move += vehicle.Location;
-            foreach (var car in vehicles)
-            {
-                if (Object.ReferenceEquals(car, vehicle))
-                    continue;
-                if ((car.Location - move).Length <= 10)
-                    return false;
-            }
-            return true;
+            return (!IsOccupied(move, vehicle.Id));
         }
 
         public int GetWaitingTime(Vehicle vehicle)

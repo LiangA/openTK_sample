@@ -84,6 +84,7 @@ namespace OpenTK_Sample
             paths = new List<Path>();
             vehicles = new List<Vehicle>();
             tasks = new List<Repo>();
+            updated = false;
         }
 
         public static Plant FromFile(FileInfo file)
@@ -112,29 +113,41 @@ namespace OpenTK_Sample
         private IList<Path> paths;
         private IList<Vehicle> vehicles;
         private IList<Repo> tasks;
+        private Double miny, maxy, minx, maxx, maxWidth;
+        private Box2d rect;
+        private bool updated;
 
         public IList<Vehicle> Vehicles { get => vehicles; set => vehicles = value; }
-        public IList<Path> Paths { get => paths; set => paths = value; }
+        public IList<Path> Paths { get => paths; set { paths = value; updated = false; } }
         public IList<Repo> Tasks { get => tasks; set => tasks = value; }
 
-        public Size Size
+        private void update()
         {
-            get
+            minx = miny = Double.MaxValue;
+            maxx = maxy = Double.MinValue;
+            maxWidth = Double.MinValue;
+            foreach (Path path in paths)
             {
-                double x = 0, y = 0;
-                foreach (Path path in paths)
-                {
-                    if (x < path.V1.X + 0.5 * path.Width)
-                        x = path.V1.X + 0.5 * path.Width;
-                    if (x < path.V2.X + 0.5 * path.Width)
-                        x = path.V2.X + 0.5 * path.Width;
-                    if (y < path.V1.Y + 0.5 * path.Width)
-                        y = path.V1.Y + 0.5 * path.Width;
-                    if (y < path.V2.Y + 0.5 * path.Width)
-                        y = path.V2.Y + 0.5 * path.Width;
-                }
-                return new Size((int)Math.Ceiling(x), (int)Math.Ceiling(y));
+
+                if (minx > path.V1.X) minx = path.V1.X;
+                if (minx > path.V2.X) minx = path.V2.X;
+                if (maxx < path.V1.X) maxx = path.V1.X;
+                if (maxx < path.V2.X) maxx = path.V2.X;
+                if (miny > path.V1.Y) miny = path.V1.Y;
+                if (miny > path.V2.Y) miny = path.V2.Y;
+                if (maxy < path.V1.Y) maxy = path.V1.Y;
+                if (maxy < path.V2.Y) maxy = path.V2.Y;
+                if (maxWidth < path.Width) maxWidth = path.Width;
             }
+            rect = new Box2d(new Vector2d(minx - 10, miny - 10), new Vector2d(maxx + 10, maxy + 10));
+            updated = true;
         }
+
+        public double MinX { get { if (!updated) update(); return minx; } }
+        public double MinY { get { if (!updated) update(); return miny; } }
+        public double MaxX { get { if (!updated) update(); return maxx; } }
+        public double MaxY { get { if (!updated) update(); return maxy; } }
+        public Box2d Rect { get { if (!updated) update(); return rect; } }
+        public Size Size { get => new Size((int)(rect.Right - rect.Left), (int)(rect.Bottom - rect.Top)); }
     }
 }

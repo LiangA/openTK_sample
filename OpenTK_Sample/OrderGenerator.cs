@@ -20,16 +20,11 @@ namespace OpenTK_Sample
 
         public OrderGenerator(Plant plant, int nRepos) : base()
         {
-            double miny = Double.MaxValue, maxy = Double.MinValue;
             List<double> X = new List<double>();
             foreach (var path in plant.Paths)
             {
                 if (path.V1.X == path.V2.X)
                     X.Add(path.V1.X);
-                if (miny > path.V1.Y)
-                    miny = path.V1.Y;
-                if (maxy < path.V2.Y)
-                    maxy = path.V2.Y;
             }
             int columnSize = (nRepos) / X.Count;
             repos = new Vector2d[columnSize * X.Count];
@@ -37,7 +32,7 @@ namespace OpenTK_Sample
             foreach (var x in X)
             {
                 for (int i = 1; i <= columnSize; ++i)
-                    repos[idx++] = new Vector2d(x, ((maxy - miny) / (columnSize + 1.0)) * i + miny);
+                    repos[idx++] = new Vector2d(x, ((plant.MaxY - plant.MinY) / (columnSize + 1.0)) * i + plant.MinY);
             }
         }
 

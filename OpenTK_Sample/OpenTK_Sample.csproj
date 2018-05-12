@@ -57,6 +57,7 @@
     <Compile Include="OrderGenerator.cs" />
     <Compile Include="Plant.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="RoutingStrategies\Detourer.cs" />
     <Compile Include="RoutingStrategies\STurn.cs" />
     <Compile Include="TrafficMeasurer.cs" />
     <Compile Include="Vehicle.cs" />

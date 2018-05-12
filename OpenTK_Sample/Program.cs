@@ -71,7 +71,7 @@ namespace OpenTK_Sample
 
             Visualize display = new Visualize(plant, 400, 200);
 
-            ControlPanel panel = new ControlPanel(plant);
+            ControlPanel panel = new ControlPanel(plant, agent);
             panel.Show();
             display.Run();
             agent.Agent.Abort();

@@ -17,6 +17,9 @@ namespace OpenTK_Sample
 
     class Vehicle
     {
+        static private int MaxID = 0;
+        private int id;
+        public int Id { get => id; }
         private Vector2d? target;
         private Vector2d location;
         private Plant plant;
@@ -33,8 +36,10 @@ namespace OpenTK_Sample
         public delegate void StatusUpdateHandler(object sender, EventArgs args);
         public event StatusUpdateHandler StatusUpdate;
 
-        public Vehicle(Plant plant, Vector2d startLocation, Vector2d? target = null)
+        public Vehicle(Plant plant, Vector2d startLocation, int id = 0, Vector2d? target = null)
         {
+            this.id = (id <= 0) ? (Vehicle.MaxID + 1) : id;
+            if (MaxID < this.id) MaxID = this.id;
             this.plant = plant;
             location = startLocation;
             this.target = target;
@@ -166,6 +171,14 @@ namespace OpenTK_Sample
             {
                 haltBefore = 0;
                 haltAfter = 0;
+                foreach (var t in plant.Tasks)
+                {
+                    if (t.Location == tasks.Peek().Target && t.Color == color)
+                    {
+                        plant.Tasks.Remove(t);
+                        break;
+                    }
+                }
                 tasks.Dequeue();
             }
 

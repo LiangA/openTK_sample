@@ -52,29 +52,37 @@ namespace OpenTK_Sample
 
     class Order
     {
-        private Plant plant;
         private Thread thread;
-        public Thread Agent { get => thread; set => thread = value; }
-        public AppointMode AppointMode { get => appointMode; set => appointMode = value; }
-
-        private int vehicleCount, orderCount;
+        private Plant plant;
         private Vector2d startLocation;
         private AppointMode appointMode;
-        Queue<IList<Task>> orders;
+
+        private int vehicleCount;
+        private Queue<IList<Task>> orders;
+        private RoutingStrategies.Detourer detourer;
+
+        public Thread Agent { get => thread; set => thread = value; }
+        public AppointMode AppointMode { get => appointMode; set => appointMode = value; }
+        public Vehicle.StatusUpdateHandler Detour;
+
         private void GenCar()
         {
             while (true)
             {
-                //Console.Write(".");
                 try
                 {
                     if (ShouldAppoint() && orders.Count > 0) {
                         Vehicle vehicle = new Vehicle(plant, startLocation);
                         plant.Vehicles.Add(vehicle);
                         vehicle.Velocity = 2.5;
+                        foreach (var task in orders.Peek())
+                        {
+                            if (task.Target.Y != plant.MinY && task.Target.Y != plant.MaxY)
+                                plant.Tasks.Add(new Repo(task.Target, ColorPeeker.PeekColor(vehicleCount)));
+                        }
                         vehicle.SetTasks(orders.Dequeue());
                         vehicle.StatusUpdate += RemoveSuspendUpdater;
-                        vehicle.StatusUpdate += DetourUpdater;
+                        vehicle.StatusUpdate += detourer.Detour;
                         vehicle.Color = ColorPeeker.PeekColor(vehicleCount++);
                     }
                     Thread.Sleep(5);
@@ -102,9 +110,10 @@ namespace OpenTK_Sample
         public Order(Plant plant)
         {
             vehicleCount = 0;
-            orderCount = 0;
             startLocation = new Vector2d(10, 10);
             this.plant = plant;
+            detourer = new RoutingStrategies.Detourer(plant);
+            Detour = new Vehicle.StatusUpdateHandler(detourer.Detour);
             orders = new Queue<IList<Task>>();
             thread = new Thread(new ThreadStart(GenCar));
             appointMode = AppointMode.WhenHasSpace;
@@ -127,11 +136,9 @@ namespace OpenTK_Sample
                 if (fields.Length <= 1)
                     continue;
                 temp.Add(new Task(new Vector2d(Double.Parse(fields[0]), Double.Parse(fields[1])), 0, Int32.Parse(fields[2])));
-                plant.Tasks.Add(new Repo(new Vector2d(Double.Parse(fields[0]), Double.Parse(fields[1])), ColorPeeker.PeekColor(orderCount)));
             }
             Order.SortingOrder(temp, rule);
             orders.Enqueue(router(plant, temp));
-            ++orderCount;
         }
 
         public void AddOrders(IList<FileInfo> files, OrderRule rule, Func<Plant, IList<Task>, IList<Task> > router)
@@ -149,26 +156,6 @@ namespace OpenTK_Sample
                     //vehicle.Color = Color.Purple;
                     vehicle.Fadeout();
                     break;
-            }
-        }
-
-        private void DetourUpdater(object sender, EventArgs e)
-        {
-            Vehicle vehicle = (Vehicle)sender;
-            if (vehicle.State == VehicleState.Waiting)
-            {
-                Task[] detour = new Task[1];
-                double dx = 0, dy = 0;
-                if (vehicle.Location.Y != 10 && vehicle.Location.Y != 90)
-                    dx = vehicle.Velocity;
-                else
-                    dy = (vehicle.CurrentTask.Value.Target.X > vehicle.Location.X) ? vehicle.Velocity : -vehicle.Velocity;
-                int waiting = plant.GetWaitingTime(vehicle);
-                if (true || waiting >= 5 * 3 + (int)(Math.Ceiling(40.0 / vehicle.Velocity)))
-                {
-                    detour[0] = new Task(vehicle.Location + new Vector2d(dx, dy));
-                    vehicle.InsertTasks(detour);
-                }
             }
         }
     }
