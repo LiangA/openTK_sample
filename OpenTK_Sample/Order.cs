@@ -56,6 +56,7 @@ namespace OpenTK_Sample
         private Plant plant;
         private Vector2d startLocation;
         private AppointMode appointMode;
+        private double velocity;
 
         private int vehicleCount;
         private Queue<IList<Task>> orders;
@@ -63,6 +64,8 @@ namespace OpenTK_Sample
 
         public Thread Agent { get => thread; set => thread = value; }
         public AppointMode AppointMode { get => appointMode; set => appointMode = value; }
+        public double Velocity { get => velocity; set => velocity = value; }
+
         public Vehicle.StatusUpdateHandler Detour;
 
         private void GenCar()
@@ -74,7 +77,7 @@ namespace OpenTK_Sample
                     if (ShouldAppoint() && orders.Count > 0) {
                         Vehicle vehicle = new Vehicle(plant, startLocation);
                         plant.Vehicles.Add(vehicle);
-                        vehicle.Velocity = 2.5;
+                        vehicle.Velocity = Velocity;
                         foreach (var task in orders.Peek())
                         {
                             if (task.Target.Y != plant.MinY && task.Target.Y != plant.MaxY)
@@ -82,7 +85,7 @@ namespace OpenTK_Sample
                         }
                         vehicle.SetTasks(orders.Dequeue());
                         vehicle.StatusUpdate += RemoveSuspendUpdater;
-                        //vehicle.StatusUpdate += detourer.Detour;
+                        vehicle.StatusUpdate += detourer.Detour;
                         vehicle.Color = ColorPeeker.PeekColor(vehicleCount++);
                     }
                     Thread.Sleep(5);

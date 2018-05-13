@@ -36,3 +36,21 @@ D:\FL\Documents\Visual Studio 2017\Projects\OpenTK\OpenTK_Sample\obj\Debug\OpenT
 D:\FL\Documents\Visual Studio 2017\Projects\OpenTK\OpenTK_Sample\obj\Debug\OpenTK_Sample.csproj.CopyComplete
 D:\FL\Documents\Visual Studio 2017\Projects\OpenTK\OpenTK_Sample\obj\Debug\OpenTK_Sample.exe
 D:\FL\Documents\Visual Studio 2017\Projects\OpenTK\OpenTK_Sample\obj\Debug\OpenTK_Sample.pdb
+D:\git repository\openTK_sample\OpenTK_Sample\bin\Debug\OpenTK_Sample.exe.config
+D:\git repository\openTK_sample\OpenTK_Sample\bin\Debug\OpenTK_Sample.exe
+D:\git repository\openTK_sample\OpenTK_Sample\bin\Debug\OpenTK_Sample.pdb
+D:\git repository\openTK_sample\OpenTK_Sample\bin\Debug\OpenTK.dll
+D:\git repository\openTK_sample\OpenTK_Sample\bin\Debug\OpenTK.xml
+D:\git repository\openTK_sample\OpenTK_Sample\obj\Debug\OpenTK_Sample.csprojResolveAssemblyReference.cache
+D:\git repository\openTK_sample\OpenTK_Sample\obj\Debug\OpenTK_Sample.csproj.CoreCompileInputs.cache
+D:\git repository\openTK_sample\OpenTK_Sample\obj\Debug\OpenTK_Sample.exe
+D:\git repository\openTK_sample\OpenTK_Sample\obj\Debug\OpenTK_Sample.pdb
+C:\Users\Liang\Desktop\opentk\openTK_sample\OpenTK_Sample\bin\Debug\OpenTK_Sample.exe.config
+C:\Users\Liang\Desktop\opentk\openTK_sample\OpenTK_Sample\bin\Debug\OpenTK_Sample.exe
+C:\Users\Liang\Desktop\opentk\openTK_sample\OpenTK_Sample\bin\Debug\OpenTK_Sample.pdb
+C:\Users\Liang\Desktop\opentk\openTK_sample\OpenTK_Sample\bin\Debug\OpenTK.dll
+C:\Users\Liang\Desktop\opentk\openTK_sample\OpenTK_Sample\bin\Debug\OpenTK.xml
+C:\Users\Liang\Desktop\opentk\openTK_sample\OpenTK_Sample\obj\Debug\OpenTK_Sample.csprojResolveAssemblyReference.cache
+C:\Users\Liang\Desktop\opentk\openTK_sample\OpenTK_Sample\obj\Debug\OpenTK_Sample.csproj.CoreCompileInputs.cache
+C:\Users\Liang\Desktop\opentk\openTK_sample\OpenTK_Sample\obj\Debug\OpenTK_Sample.exe
+C:\Users\Liang\Desktop\opentk\openTK_sample\OpenTK_Sample\obj\Debug\OpenTK_Sample.pdb

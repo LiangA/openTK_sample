@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>OpenTK_Sample.Program</StartupObject>
+    <StartupObject>OpenTK_Sample.ProgramPlant2</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -54,9 +54,12 @@
     </Compile>
     <Compile Include="GL2DUtil.cs" />
     <Compile Include="Order.cs" />
+    <Compile Include="OrderGeneratorPlant2.cs" />
     <Compile Include="OrderGenerator.cs" />
     <Compile Include="Plant.cs" />
+    <Compile Include="ProgramPlant2.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="programUpdater.cs" />
     <Compile Include="RoutingStrategies\Detourer.cs" />
     <Compile Include="RoutingStrategies\LargestGap.cs" />
     <Compile Include="RoutingStrategies\Midpoint.cs" />

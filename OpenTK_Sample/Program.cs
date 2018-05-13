@@ -7,46 +7,6 @@ using System.Threading;
 
 namespace OpenTK_Sample
 {
-    class Updater
-    {
-        private Plant plant;
-        int turnCount;
-        bool cleared;
-        public Updater(Plant plant)
-        {
-            this.plant = plant;
-            thread = new Thread(new ThreadStart(Update));
-            cleared = true;
-        }
-        private Thread thread;
-        public Thread Controle { get => thread; set => thread = value; }
-        private void Update()
-        {
-            while (true)
-            {
-                try
-                {
-                    foreach(var vehicle in plant.Vehicles)
-                        vehicle.OnStatusUpdate();
-                    Thread.Sleep(20);
-                    ++turnCount;
-                    if (!cleared && plant.Vehicles.Count == 0)
-                    {
-                        Console.WriteLine("Finished the work at round: " + turnCount.ToString());
-                        cleared = true;
-                    }
-                    else if (plant.Vehicles.Count > 0)
-                    {
-                        cleared = false;
-                    }
-                }
-                catch (Exception)
-                {
-                    continue;
-                }
-            }
-        }
-    }
     class Program
     {
         [STAThread]
@@ -62,13 +22,15 @@ namespace OpenTK_Sample
             foreach (var i in di.GetFiles("*.csv"))
                 orderFiles.Add(i.FullName);
 
-            Updater updater = new Updater(plant);
+            ProgramUpdater updater = new ProgramUpdater(plant);
+            updater.SleepInterval = 1;
 
             Order agent = new Order(plant);
-            agent.AddOrders(di.GetFiles("*.csv"), OrderRule.FirstInFirstServe, RoutingStrategies.LargestGap.FindRoute);
+            agent.Velocity = 2.5; // different speed should be appointed to different plant
+            agent.AddOrders(di.GetFiles("*.csv"), OrderRule.FirstInFirstServe, RoutingStrategies.STurn.FindRoute);
             agent.AppointMode = AppointMode.WhenPlantCleared;
 
-            Visualize display = new Visualize(plant, 400, 200);
+            Visualize display = new Visualize(plant, 600, 300);
 
             updater.Controle.Start();
             agent.Agent.Start();

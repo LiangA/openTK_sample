@@ -26,7 +26,7 @@ namespace OpenTK_Sample.RoutingStrategies
             {
                 if (car.Location == vehicle.Location + new Vector2d(0, dy))
                 {
-                    if (car.Halt < 40)
+                    if (car.Halt <= Math.Ceiling(20 + (50/vehicle.Velocity)) )
                         return;
                     else
                         break;
