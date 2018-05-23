@@ -32,14 +32,14 @@ namespace OpenTK_Sample
 
             Visualize display = new Visualize(plant, 600, 300);
 
-            updater.Controle.Start();
+            updater.Control.Start();
             agent.Agent.Start();
             //ControlPanel panel = new ControlPanel(plant, agent);
             //panel.Show();
 
             display.Run();
             agent.Agent.Abort();
-            updater.Controle.Abort();
+            updater.Control.Abort();
         }
     }
 }

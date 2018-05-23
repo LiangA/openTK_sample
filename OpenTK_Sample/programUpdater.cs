@@ -22,7 +22,7 @@ namespace OpenTK_Sample
         }
 
         private Thread thread;
-        public Thread Controle { get => thread; set => thread = value; }
+        public Thread Control { get => thread; set => thread = value; }
         public int SleepInterval { get => sleepInterval; set => sleepInterval = value; }
 
         private void Update()
@@ -33,6 +33,7 @@ namespace OpenTK_Sample
                 {
                     foreach (var vehicle in plant.Vehicles)
                         vehicle.OnStatusUpdate();
+
                     Thread.Sleep(sleepInterval);
                     ++turnCount;
                     if (!cleared && plant.Vehicles.Count == 0)
