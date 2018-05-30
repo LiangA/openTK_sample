@@ -102,7 +102,7 @@ namespace OpenTK_Sample
             switch (appointMode)
             {
                 case AppointMode.WhenHasSpace:
-                    return (plant.Vehicles.Count < 8 && !plant.IsOccupied(startLocation));
+                    return (/*plant.Vehicles.Count < 8 &&*/ !plant.IsOccupied(startLocation));
                 case AppointMode.WhenPlantCleared:
                     return (plant.Vehicles.Count == 0);
                 default:

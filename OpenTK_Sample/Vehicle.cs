@@ -28,8 +28,9 @@ namespace OpenTK_Sample
         private bool moveFailed, fadeout;
 
         private double velocity;
-        public double Velocity { get => velocity; set => velocity = value; }
         private Color color;
+
+        public double Velocity { get => velocity; set => velocity = value; }
         public Color Color { get => color; set => color = value; }
         public int Wait { get => wait;  }
 

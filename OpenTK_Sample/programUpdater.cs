@@ -32,7 +32,10 @@ namespace OpenTK_Sample
                 try
                 {
                     foreach (var vehicle in plant.Vehicles)
+                    {
                         vehicle.OnStatusUpdate();
+                    }
+
 
                     Thread.Sleep(sleepInterval);
                     ++turnCount;
@@ -48,6 +51,8 @@ namespace OpenTK_Sample
                 }
                 catch (Exception)
                 {
+                    Thread.Sleep(1);
+                    --turnCount;
                     continue;
                 }
             }

@@ -23,7 +23,7 @@ namespace OpenTK_Sample
                 orderFiles.Add(i.FullName);
 
             ProgramUpdater updater = new ProgramUpdater(plant);
-            updater.SleepInterval = 1;
+            updater.SleepInterval = 2;
 
             Order agent = new Order(plant);
             agent.Velocity = 7; // different speed should be appointed to different plant

@@ -32,6 +32,7 @@ namespace OpenTK_Sample.RoutingStrategies
                         break;
                 }
             }
+
             Task[] tasks = new Task[4];
             tasks[0] = new Task(vehicle.Location + new Vector2d(dx, 0), 5, 5);
             tasks[1] = new Task(vehicle.Location + new Vector2d(dx, dy), 0, 0);
